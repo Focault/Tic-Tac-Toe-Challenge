@@ -35,27 +35,32 @@ def print_board(_board):
 
 def ask_input(_board, _shape, _row_s):
     while True:
-        ver = input("\nPlease Insert Vertical Index: ")
-        hor = input("Please Insert Horizontal Index: ")
-        if ver.isnumeric() and hor.isnumeric() and 0 < int(ver) <= _row_s and 0 < int(hor) <= _row_s:
-            ver, hor = int(ver) - 1, int(hor) - 1
+        try:
+            ver = int(input("\nPlease Insert Vertical Index: ")) - 1
+            hor = int(input("Please Insert Horizontal Index: ")) - 1
             if _board[ver][hor] == ' ':
                 break
             else:
                 print("Spot Taken I'm Afraid...")
-        else:
-            print("Wrong! Try Again!")
+        except (TypeError, ValueError):
+            print("Only enter numbers please.")
+        except IndexError:
+            print("Out of bounds.")
     _board[ver][hor] = _shape
 
 
 def play_again():
     while True:
-        resume = input("\nPlay Again? (y/n) - ").lower()
-        if resume == 'y':
-            return True
-        if resume == 'n':
-            return False
-        print("Wrong Input.")
+        try:
+            while True:
+                resume = input("\nPlay Again? (y/n) - ").lower()
+                if resume == 'y':
+                    return True
+                if resume == 'n':
+                    return False
+                print("Wrong Input.")
+        except (TypeError, ValueError):
+            print("Wrong Input.")
 
 
 def print_result(_who_won, _shape_dict, _board):
